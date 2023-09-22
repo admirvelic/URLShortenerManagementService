@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "card")
+@Table(name = "Url")
 @Getter
 @Setter
 public class Url {
