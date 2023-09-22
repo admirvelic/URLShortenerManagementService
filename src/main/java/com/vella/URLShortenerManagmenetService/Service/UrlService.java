@@ -42,7 +42,7 @@ public class UrlService {
             }
 
             HashtebleUrl tableUrl = tableOp.get();
-            Hashtable<Long, String> hashtable = tableUrl.getTable();
+            Hashtable<Long, String> hashtable = tableUrl.getHashtable();
             Url url = new Url();
             url.setRealURL(realUrl);
             Url savedUrl = urlRepo.save(url);
@@ -55,7 +55,7 @@ public class UrlService {
             savedUrl.setShortURL(shortUrl);
 
 
-            tableUrl.setTable(hashtable);
+            tableUrl.setHashtable(hashtable);
             tableRepo.save(tableUrl);
 
             return urlRepo.save(savedUrl);
@@ -80,7 +80,7 @@ public class UrlService {
             }
 
             HashtebleUrl tableUrl = tableOp.get();
-            Hashtable<Long, String> hashtable = tableUrl.getTable();
+            Hashtable<Long, String> hashtable = tableUrl.getHashtable();
 
 
 
@@ -89,7 +89,7 @@ public class UrlService {
             urlRepo.delete(url);
 
             hashtable.remove(id);
-            tableUrl.setTable(hashtable);
+            tableUrl.setHashtable(hashtable);
             tableRepo.save(tableUrl);
 
             return ("Deleted rout with id " + String.valueOf(id));
