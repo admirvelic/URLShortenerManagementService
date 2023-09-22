@@ -10,7 +10,7 @@ import java.util.Hashtable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
+@Table(name = "hashtebleUrl")
 @Getter
 @Setter
 public class HashtebleUrl {
@@ -19,6 +19,6 @@ public class HashtebleUrl {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Hashtable<Long, String> table = new Hashtable<>();
+    private Hashtable<Long, String> hashtable;
 
 }
