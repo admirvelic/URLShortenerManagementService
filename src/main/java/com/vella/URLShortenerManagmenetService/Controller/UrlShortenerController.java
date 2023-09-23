@@ -29,7 +29,7 @@ public class UrlShortenerController {
         return service.deleteRoute(id);
     }
 
-    @GetMapping("/seeRoutes/{pageNumber}/{pageSize}")
+    @GetMapping("/viewRoutes/{pageNumber}/{pageSize}")
     public Page<Url> viewRoutes(@PathVariable Integer pageNumber, @PathVariable Integer pageSize)throws CustomErrorException, IOException{
         return service.viewRoutes(pageNumber, pageSize);
     }
