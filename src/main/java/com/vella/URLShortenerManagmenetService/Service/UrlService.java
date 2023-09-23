@@ -1,97 +1,69 @@
 package com.vella.URLShortenerManagmenetService.Service;
 
 
-import com.vella.URLShortenerManagmenetService.Model.HashtebleUrl;
 import com.vella.URLShortenerManagmenetService.Model.Url;
-import com.vella.URLShortenerManagmenetService.Repository.HashTableRepo;
 import com.vella.URLShortenerManagmenetService.Repository.UrlRepo;
 import com.vella.URLShortenerManagmenetService.exception.CustomErrorException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class UrlService {
 
     private final UrlRepo urlRepo;
-    private final HashTableRepo tableRepo;
 
     public Url createShortUrl(String realUrl) {
+        if (realUrl == null || realUrl.trim().isEmpty()) {
+            throw new IllegalArgumentException("No url was set");
+        }
+
         try {
+            String baseShortUrl = "http://localhost:8080/";
+            String uniqueUrl = realUrl;
+            String hash;
 
-            if(realUrl.isEmpty()){
-                throw new IOException("No url was set");
+            hash = DigestUtils.md5Hex(uniqueUrl);
+
+            String shortUrl = baseShortUrl + hash;
+
+            Optional<Url> existingUrl = urlRepo.findByShortUrl(shortUrl);
+            if (existingUrl.isEmpty()) {
+                Url url = new Url();
+                url.setRealURL(realUrl);
+                url.setShortURL(shortUrl);
+                return urlRepo.save(url);
+            }else{
+                return existingUrl.get();
             }
-
-            Optional<HashtebleUrl> tableOp = tableRepo.findById(1L);
-
-            if (tableOp.isEmpty()) {
-                throw new CustomErrorException("No hash table in database");
-            }
-
-            HashtebleUrl tableUrl = tableOp.get();
-            Hashtable<Long, String> hashtable = tableUrl.getHashtable();
-            Url url = new Url();
-            url.setRealURL(realUrl);
-            Url savedUrl = urlRepo.save(url);
-
-            hashtable.put(url.getId(), url.getRealURL());
-            String hash = String.valueOf(url.getId().hashCode());
-
-            String shortUrl = "http://localhost:8080/" + "hash";
-
-            savedUrl.setShortURL(shortUrl);
-
-
-            tableUrl.setHashtable(hashtable);
-            tableRepo.save(tableUrl);
-
-            return urlRepo.save(savedUrl);
 
         } catch (Exception e) {
-            throw new CustomErrorException("Failed creating short URL", e);
+            throw new RuntimeException("Failed creating short URL", e);
         }
     }
 
     public String deleteRoute(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("No id was set");
+        }
         try {
 
             Optional<Url> urlOp = urlRepo.findById(id);
             if (urlOp.isEmpty()) {
                 throw new CustomErrorException("Cant find rout with specified id");
             }
-
-            Optional<HashtebleUrl> tableOp = tableRepo.findById(1L);
-
-            if (tableOp.isEmpty()) {
-                throw new CustomErrorException("No hash table in database");
-            }
-
-            HashtebleUrl tableUrl = tableOp.get();
-            Hashtable<Long, String> hashtable = tableUrl.getHashtable();
-
-
-
             Url url = urlOp.get();
-
             urlRepo.delete(url);
-
-            hashtable.remove(id);
-            tableUrl.setHashtable(hashtable);
-            tableRepo.save(tableUrl);
-
             return ("Deleted rout with id " + String.valueOf(id));
 
         } catch (Exception e) {
@@ -99,13 +71,13 @@ public class UrlService {
         }
     }
 
-    public Page<Url> viewRoutes(Integer pageNumber, Integer pageSize){
+    public Page<Url> viewRoutes(Integer pageNumber, Integer pageSize) {
         try {
-            if(pageNumber == null){
+            if (pageNumber == null) {
                 throw new IOException("Page number wasn't set");
             }
 
-            if(pageSize == null){
+            if (pageSize == null) {
                 throw new IOException("Page size wasn't set");
             }
 
@@ -113,11 +85,10 @@ public class UrlService {
 
             return urlRepo.findAll(pageable);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomErrorException("Field fetching routes");
         }
     }
-
 
 
 }
