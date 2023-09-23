@@ -1,7 +1,10 @@
 package com.vella.URLShortenerManagmenetService.Service;
 
 
+import com.google.gson.Gson;
+import com.vella.URLShortenerManagmenetService.Model.Action;
 import com.vella.URLShortenerManagmenetService.Model.Url;
+import com.vella.URLShortenerManagmenetService.Model.UrlMessage;
 import com.vella.URLShortenerManagmenetService.Repository.UrlRepo;
 import com.vella.URLShortenerManagmenetService.exception.CustomErrorException;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.Optional;
 
 @Service
@@ -22,6 +24,8 @@ import java.util.Optional;
 public class UrlService {
 
     private final UrlRepo urlRepo;
+    private final ProducerService producerService;
+    private final Gson gson;
 
     public Url createShortUrl(String realUrl) {
         if (realUrl == null || realUrl.trim().isEmpty()) {
@@ -42,6 +46,11 @@ public class UrlService {
                 Url url = new Url();
                 url.setRealURL(realUrl);
                 url.setShortURL(shortUrl);
+
+                UrlMessage urlMessage = new UrlMessage(url, Action.SAVE);
+                String message = gson.toJson(urlMessage);
+                producerService.sendMessage(message);
+
                 return urlRepo.save(url);
             }else{
                 return existingUrl.get();
@@ -63,6 +72,11 @@ public class UrlService {
                 throw new CustomErrorException("Cant find rout with specified id");
             }
             Url url = urlOp.get();
+
+            UrlMessage urlMessage = new UrlMessage(url, Action.DELETE);
+            String message = gson.toJson(urlMessage);
+            producerService.sendMessage(message);
+
             urlRepo.delete(url);
             return ("Deleted rout with id " + String.valueOf(id));
 
