@@ -1,10 +1,10 @@
-package com.vella.URLShortenerManagmenetService;
+package com.vella.URLShortenerManagementService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UrlShortenerManagmenetServiceApplicationTests {
+class UrlShortenerManagementServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
