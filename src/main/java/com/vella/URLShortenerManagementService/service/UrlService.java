@@ -34,10 +34,9 @@ public class UrlService {
 
         try {
             String baseShortUrl = "http://localhost:8080/";
-            String uniqueUrl = realUrl;
             String hash;
 
-            hash = DigestUtils.md5Hex(uniqueUrl);
+            hash = DigestUtils.md5Hex(realUrl);
 
             String shortUrl = baseShortUrl + hash;
 
