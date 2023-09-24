@@ -1,4 +1,4 @@
-package com.vella.URLShortenerManagmenetService.Service;
+package com.vella.URLShortenerManagementService.service;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
