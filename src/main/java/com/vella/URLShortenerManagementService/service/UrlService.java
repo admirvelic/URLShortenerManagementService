@@ -1,12 +1,12 @@
-package com.vella.URLShortenerManagmenetService.Service;
+package com.vella.URLShortenerManagementService.service;
 
 
 import com.google.gson.Gson;
-import com.vella.URLShortenerManagmenetService.Model.Action;
-import com.vella.URLShortenerManagmenetService.Model.Url;
-import com.vella.URLShortenerManagmenetService.Model.UrlMessage;
-import com.vella.URLShortenerManagmenetService.Repository.UrlRepo;
-import com.vella.URLShortenerManagmenetService.exception.CustomErrorException;
+import com.vella.URLShortenerManagementService.model.Action;
+import com.vella.URLShortenerManagementService.model.Url;
+import com.vella.URLShortenerManagementService.model.UrlMessage;
+import com.vella.URLShortenerManagementService.repository.UrlRepo;
+import com.vella.URLShortenerManagementService.exception.CustomErrorException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -52,7 +52,7 @@ public class UrlService {
                 producerService.sendMessage(message);
 
                 return urlRepo.save(url);
-            }else{
+            } else {
                 return existingUrl.get();
             }
 
