@@ -99,7 +99,7 @@ public class UrlService {
             return urlRepo.findAll(pageable);
 
         } catch (Exception e) {
-            throw new CustomErrorException("Faield fetching routes");
+            throw new CustomErrorException("Failed fetching routes");
         }
     }
 
