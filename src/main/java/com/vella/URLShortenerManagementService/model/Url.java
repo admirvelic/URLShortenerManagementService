@@ -1,4 +1,4 @@
-package com.vella.URLShortenerManagmenetService.Model;
+package com.vella.URLShortenerManagementService.model;
 
 import jakarta.persistence.*;
 import lombok.*;
