@@ -1,10 +1,11 @@
-package com.vella.URLShortenerManagmenetService.Repository;
+package com.vella.URLShortenerManagementService.repository;
 
 
-import com.vella.URLShortenerManagmenetService.Model.Url;
+import com.vella.URLShortenerManagementService.model.Url;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.Optional;
 
 public interface UrlRepo extends JpaRepository<Url, Long> {
