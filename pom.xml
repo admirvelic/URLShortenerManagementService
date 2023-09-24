@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vella</groupId>
-    <artifactId>URLShortenerManagmenetService</artifactId>
+    <artifactId>URLShortenerManagementService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>URLShortenerManagmenetService</name>
+    <name>URLShortenerManagementService</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>17</java.version>
