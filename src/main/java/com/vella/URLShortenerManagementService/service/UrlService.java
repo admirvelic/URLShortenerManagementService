@@ -81,7 +81,7 @@ public class UrlService {
             return ("Deleted rout with id " + String.valueOf(id));
 
         } catch (Exception e) {
-            throw new CustomErrorException("Field deleting route", e);
+            throw new CustomErrorException("Faield deleting route", e);
         }
     }
 
@@ -100,7 +100,7 @@ public class UrlService {
             return urlRepo.findAll(pageable);
 
         } catch (Exception e) {
-            throw new CustomErrorException("Field fetching routes");
+            throw new CustomErrorException("Faield fetching routes");
         }
     }
 
