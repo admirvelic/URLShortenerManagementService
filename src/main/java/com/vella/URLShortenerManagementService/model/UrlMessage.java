@@ -1,7 +1,6 @@
-package com.vella.URLShortenerManagmenetService.Model;
+package com.vella.URLShortenerManagementService.model;
 
 
-import com.google.gson.Gson;
 import jakarta.persistence.Entity;
 import lombok.*;
 
