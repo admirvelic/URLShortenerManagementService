@@ -1,9 +1,9 @@
-package com.vella.URLShortenerManagmenetService.Controller;
+package com.vella.URLShortenerManagementService.controller;
 
 
-import com.vella.URLShortenerManagmenetService.Model.Url;
-import com.vella.URLShortenerManagmenetService.Service.UrlService;
-import com.vella.URLShortenerManagmenetService.exception.CustomErrorException;
+import com.vella.URLShortenerManagementService.model.Url;
+import com.vella.URLShortenerManagementService.service.UrlService;
+import com.vella.URLShortenerManagementService.exception.CustomErrorException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,17 +20,17 @@ public class UrlShortenerController {
     private final UrlService service;
 
     @PostMapping("/create")
-    public Url createShortUrl(@RequestBody String realUrl)throws CustomErrorException, IOException {
+    public Url createShortUrl(@RequestBody String realUrl) throws CustomErrorException, IOException {
         return service.createShortUrl(realUrl);
     }
 
     @DeleteMapping("/delete")
-    public String deleteRoute(@RequestBody Long id)throws CustomErrorException, IOException{
+    public String deleteRoute(@RequestBody Long id) throws CustomErrorException, IOException {
         return service.deleteRoute(id);
     }
 
     @GetMapping("/viewRoutes/{pageNumber}/{pageSize}")
-    public Page<Url> viewRoutes(@PathVariable Integer pageNumber, @PathVariable Integer pageSize)throws CustomErrorException, IOException{
+    public Page<Url> viewRoutes(@PathVariable Integer pageNumber, @PathVariable Integer pageSize) throws CustomErrorException, IOException {
         return service.viewRoutes(pageNumber, pageSize);
     }
 }
