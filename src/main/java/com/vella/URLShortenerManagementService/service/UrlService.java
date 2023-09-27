@@ -13,6 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class UrlService {
             String hash;
 
             hash = DigestUtils.md5Hex(realUrl);
-            hash = hash.substring(0,8);
+            hash = hash.substring(0, 8);
 
             String shortUrl = baseShortUrl + hash;
 
@@ -57,7 +58,7 @@ public class UrlService {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed creating short URL", e);
+            throw new CustomErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed creating short URL", e);
         }
     }
 
@@ -69,7 +70,7 @@ public class UrlService {
 
             Optional<Url> urlOp = urlRepo.findById(id);
             if (urlOp.isEmpty()) {
-                throw new CustomErrorException("Cant find rout with specified id");
+                throw new CustomErrorException(HttpStatus.NOT_FOUND, "Cant find rout with specified id");
             }
             Url url = urlOp.get();
 
@@ -78,10 +79,10 @@ public class UrlService {
             producerService.sendMessage(message);
 
             urlRepo.delete(url);
-            return ("Deleted rout with id " + String.valueOf(id));
+            return ("Deleted rout with id " + id);
 
         } catch (Exception e) {
-            throw new CustomErrorException("Faield deleting route", e);
+            throw new CustomErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Failed deleting route", e);
         }
     }
 
@@ -100,7 +101,7 @@ public class UrlService {
             return urlRepo.findAll(pageable);
 
         } catch (Exception e) {
-            throw new CustomErrorException("Failed fetching routes");
+            throw new CustomErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed fetching routes");
         }
     }
 
