@@ -1,7 +1,5 @@
 package com.vella.URLShortenerManagementService.model;
 
-
-import jakarta.persistence.Entity;
 import lombok.*;
 
 @Builder
