@@ -15,7 +15,6 @@ public interface UrlRepo extends JpaRepository<Url, Long> {
     @Override
     Optional<Url> findById(Long id);
 
-
     Page<Url> findAll(Pageable pageable);
 
     Optional<Url> findByShortURL(String shortUrl);
