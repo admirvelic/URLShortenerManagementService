@@ -1,11 +1,30 @@
 version: "3.9"
 services:
   mariadb:
-    container_name: UrlShortenerMariaDb
+    hostname: mariadb
     image: mariadb
     restart: unless-stopped
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: uno
+      MYSQL_ROOT_USER: root
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+
+  redis:
+    image: redis
+    hostname: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
