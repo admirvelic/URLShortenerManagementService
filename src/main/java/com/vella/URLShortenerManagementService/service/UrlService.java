@@ -37,10 +37,11 @@ public class UrlService {
             String hash;
 
             hash = DigestUtils.md5Hex(realUrl);
+            hash = hash.substring(0,8);
 
             String shortUrl = baseShortUrl + hash;
 
-            Optional<Url> existingUrl = urlRepo.findByShortUrl(shortUrl);
+            Optional<Url> existingUrl = urlRepo.findByShortURL(shortUrl);
             if (existingUrl.isEmpty()) {
                 Url url = new Url();
                 url.setRealURL(realUrl);
