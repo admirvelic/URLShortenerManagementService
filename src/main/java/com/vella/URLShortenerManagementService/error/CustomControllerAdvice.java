@@ -12,6 +12,7 @@ import java.io.StringWriter;
 
 @ControllerAdvice
 public class CustomControllerAdvice {
+
     @ExceptionHandler(NullPointerException.class) // exception handled
     public ResponseEntity<ErrorResponse> handleNullPointerExceptions(Exception e) {
         HttpStatus status = HttpStatus.NOT_FOUND;
