@@ -24,8 +24,8 @@ public class UrlShortenerController {
         return service.createShortUrl(realUrl);
     }
 
-    @DeleteMapping("/delete")
-    public String deleteRoute(@RequestBody Long id) throws CustomErrorException, IOException {
+    @DeleteMapping("/delete/{id}")
+    public String deleteRoute(@PathVariable Long id) throws CustomErrorException, IOException {
         return service.deleteRoute(id);
     }
 
